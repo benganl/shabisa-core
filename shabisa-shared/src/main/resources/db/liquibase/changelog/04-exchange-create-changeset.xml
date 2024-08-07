@@ -1,0 +1,42 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="04-exchange-create-changeset-01" author="benganl">
+        <createTable tableName="exchanges">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="exchanges_pkey" />
+            </column>
+            <column name="customer_ref" type="UUID" />
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE" />
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE" />
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_exchanges_customer_01"
+                                 baseTableName="exchanges" baseColumnNames="customer_ref"
+                                 referencedTableName="customers" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="04-exchange-create-changeset-02" author="benganl">
+        <createTable tableName="exchange_items">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="exchange_items_pkey" />
+            </column>
+            <column name="exchange_ref" type="UUID" />
+            <column name="vendor_item_ref" type="UUID" />
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE" />
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE" />
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_exchange_items_exchange_01"
+                                 baseTableName="exchange_items" baseColumnNames="exchange_ref"
+                                 referencedTableName="exchanges" referencedColumnNames="id" />
+
+        <addForeignKeyConstraint constraintName="fk_exchange_items_vendor_iter_01"
+                                 baseTableName="exchange_items" baseColumnNames="vendor_item_ref"
+                                 referencedTableName="vendors_items" referencedColumnNames="id" />
+    </changeSet>
+</databaseChangeLog>

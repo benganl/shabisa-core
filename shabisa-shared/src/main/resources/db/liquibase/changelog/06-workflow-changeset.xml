@@ -1,0 +1,74 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="06-workflow-changeset-01" author="benganl">
+        <createTable tableName="events">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="events_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(32) "/>
+            <column name="description" type="VARCHAR(255) "/>
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <createTable tableName="steps">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="steps_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(32) "/>
+            <column name="description" type="VARCHAR(255) "/>
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <createTable tableName="processes">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="processes_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(32) "/>
+            <column name="description" type="VARCHAR(255) "/>
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <createTable tableName="process_step_config">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="process_step_config_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(32) "/>
+            <column name="description" type="VARCHAR(255) "/>
+            <column name="process" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="current_step" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="next_step" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_process_step_process"
+                                 baseTableName="process_step_config" baseColumnNames="process"
+                                 referencedTableName="processes" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_process_step_current_step"
+                                 baseTableName="process_step_config" baseColumnNames="current_step"
+                                 referencedTableName="steps" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_process_step_next_step"
+                                 baseTableName="process_step_config" baseColumnNames="next_step"
+                                 referencedTableName="steps" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_process_step_event"
+                                 baseTableName="process_step_config" baseColumnNames="event"
+                                 referencedTableName="events" referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

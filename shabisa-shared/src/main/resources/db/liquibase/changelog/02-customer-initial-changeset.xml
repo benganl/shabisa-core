@@ -1,0 +1,22 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="02-customer-initial-changeset-01" author="benganl">
+        <createTable tableName="customers">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="customers_pkey" />
+            </column>
+            <column name="user_ref" type="UUID" />
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE" />
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE" />
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_customer_user_01"
+                                 baseTableName="customers" baseColumnNames="user_ref"
+                                 referencedTableName="users" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

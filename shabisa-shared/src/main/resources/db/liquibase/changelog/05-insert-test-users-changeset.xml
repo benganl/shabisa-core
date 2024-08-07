@@ -1,0 +1,70 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="05-insert-test-users-changeset-01" author="benganl">
+        <insert tableName="users">
+            <column name="id" value="1e5dfed6-7588-4db3-98f2-c4cb8c00b9d1"/>
+            <column name="username" value="admin"/>
+            <column name="email_address" value="vhengani@gmail.com"/>
+            <column name="mobile_number" value="0721234567"/>
+            <column name="password" value="$2a$10$bEqimaHOYG2CxKUuOGOtnObsJcbeA1MMVjKpFN0uL7kfynrRfBnfO"/>
+            <column name="datetime_created" valueDate="2024-07-06T00:00:00"/>
+            <column name="datetime_updated" valueDate="2024-07-06T00:00:00"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="1e3dfed6-7586-4db3-96f2-c4cb8c00b9d2"/>
+            <column name="username" value="customer"/>
+            <column name="email_address" value="vhengani@gmail.com"/>
+            <column name="mobile_number" value="0721234567"/>
+            <column name="password" value="$2a$10$ypw5fWT5qZO1mksYuAUcx.5z/MEEob1Id9nJhXEYszaB/VXUgei86"/>
+            <column name="datetime_created" valueDate="2024-07-06T00:00:00"/>
+            <column name="datetime_updated" valueDate="2024-07-06T00:00:00"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="1e5dfed6-7588-4db3-98f2-c4cb8c00b9d3"/>
+            <column name="username" value="vendor"/>
+            <column name="email_address" value="vhengani@gmail.com"/>
+            <column name="mobile_number" value="0721234567"/>
+            <column name="password" value="$2a$10$Suxm90uCQtBzl0qvo/1aGeIAkfamlflM64b1o1Ou/h58lUQiTkcjy"/>
+            <column name="datetime_created" valueDate="2024-07-06T00:00:00"/>
+            <column name="datetime_updated" valueDate="2024-07-06T00:00:00"/>
+        </insert>
+    </changeSet>
+    <changeSet id="05-insert-test-users-changeset-02" author="benganl">
+        <sql>
+            INSERT INTO user_roles (id, role_id, user_id, datetime_created, datetime_updated)
+            VALUES (
+            '1e6dfed3-5588-4de3-98f2-c4cb8c00b9d1',
+            (SELECT id FROM roles WHERE name = 'ADMIN'),
+            (SELECT id FROM users WHERE username = 'admin'),
+            '2024-07-06T00:00:00',
+            '2024-07-06T00:00:00'
+            );
+        </sql>
+        <sql>
+            INSERT INTO user_roles (id, role_id, user_id, datetime_created, datetime_updated)
+            VALUES (
+            '1e7dfed4-6588-4db3-98f2-c4cb8c00b9d1',
+            (SELECT id FROM roles WHERE name = 'CUSTOMER'),
+            (SELECT id FROM users WHERE username = 'customer'),
+            '2024-07-06T00:00:00',
+            '2024-07-06T00:00:00'
+            );
+        </sql>
+        <sql>
+            INSERT INTO user_roles (id, role_id, user_id, datetime_created, datetime_updated)
+            VALUES (
+            '1e8dfed5-7588-4df3-98f2-c4cb8c00b9d1',
+            (SELECT id FROM roles WHERE name = 'VENDOR'),
+            (SELECT id FROM users WHERE username = 'vendor'),
+            '2024-07-06T00:00:00',
+            '2024-07-06T00:00:00'
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

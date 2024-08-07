@@ -1,0 +1,93 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="01-initial-changeset-01" author="benganl">
+        <createTable tableName="roles">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="roles_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(32) "/>
+            <column name="description" type="VARCHAR(255) "/>
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <createTable tableName="users">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="username" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email_address" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mobile_number" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <createTable tableName="user_roles">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_roles_pkey"/>
+            </column>
+            <column name="role_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_user_roles_users"
+                                 baseTableName="user_roles" baseColumnNames="user_id"
+                                 referencedTableName="users" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_user_roles_roles"
+                                 baseTableName="user_roles" baseColumnNames="role_id"
+                                 referencedTableName="roles" referencedColumnNames="id"/>
+
+        <addUniqueConstraint tableName="user_roles"
+                             columnNames="role_id, user_id"
+                             constraintName="unique_user_role"/>
+    </changeSet>
+
+    <changeSet id="01-initial-changeset-02" author="benganl">
+        <insert tableName="roles">
+            <column name="id" value="1e5dfed6-7588-4db3-98f2-c4cb8c00b9d1"/>
+            <column name="name" value="ADMIN"/>
+            <column name="description" value="Administrator role"/>
+            <column name="datetime_created" valueDate="2024-07-06T00:00:00"/>
+            <column name="datetime_updated" valueDate="2024-07-06T00:00:00"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" value="2b7c2c58-fc75-4e19-907d-6c0c9c53a3e1"/>
+            <column name="name" value="CUSTOMER"/>
+            <column name="description" value="User role"/>
+            <column name="datetime_created" valueDate="2024-07-06T00:00:00"/>
+            <column name="datetime_updated" valueDate="2024-07-06T00:00:00"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" value="a368f6b9-5b7f-4b69-9eb6-3d978597f7ed"/>
+            <column name="name" value="VENDOR"/>
+            <column name="description" value="Guest role"/>
+            <column name="datetime_created" valueDate="2024-07-06T00:00:00"/>
+            <column name="datetime_updated" valueDate="2024-07-06T00:00:00"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" value="a468f7b9-5b7f-4b66-9eb7-3d979567f2ed"/>
+            <column name="name" value="GUEST"/>
+            <column name="description" value="Guest role"/>
+            <column name="datetime_created" valueDate="2024-07-06T00:00:00"/>
+            <column name="datetime_updated" valueDate="2024-07-06T00:00:00"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

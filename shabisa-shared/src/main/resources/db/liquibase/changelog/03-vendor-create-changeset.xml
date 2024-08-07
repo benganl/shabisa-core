@@ -1,0 +1,38 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="03-vendor-create-changeset-01" author="benganl">
+        <createTable tableName="vendors">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="vendors_pkey" />
+            </column>
+            <column name="name" type="VARCHAR(64) "/>
+            <column name="user_ref" type="UUID" />
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE" />
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE" />
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_vendors_user_01"
+                                 baseTableName="vendors" baseColumnNames="user_ref"
+                                 referencedTableName="users" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="03-vendor-create-changeset-02" author="benganl">
+        <createTable tableName="vendors_items">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="vendor_items_pkey" />
+            </column>
+            <column name="name" type="VARCHAR(64) "/>
+            <column name="vendor_ref" type="UUID" />
+            <column name="vendor_item_type" type="VARCHAR(16)" />
+            <column name="datetime_created" type="TIMESTAMP WITHOUT TIME ZONE" />
+            <column name="datetime_updated" type="TIMESTAMP WITHOUT TIME ZONE" />
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_vendor_item_vendor_01"
+                                 baseTableName="vendors_items" baseColumnNames="vendor_ref"
+                                 referencedTableName="vendors" referencedColumnNames="id" />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,28 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOSTNAME:localhost}:${DB_PORT:5432}/${DB_NAME:wyzecmsdb}
+    username: ${DB_USER_NAME:dev}
+    password: ${DB_PASSWORD:dev@c00l!}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    open-in-view: true
+    defer-datasource-initialization: false
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+  liquibase:
+    enabled: true
+    change-log: classpath:db/liquibase/db.changelog-master.xml
+    show-summary-output: all
+    show-summary: verbose
+
+shabisa:
+  security:
+    secret: ${env.shabisa.security.secret:nZm9dzgSRmvNdRyRTSQ0VYsxyEmR2YKASma4CoDNhfSy/2pDyGguZtr5Jp9IxBxa8y8/VhC5gjJTlOk0DpqjNw==}
+    token:
+      expiration: ${env.shabisa.security.expiration:604800000}
